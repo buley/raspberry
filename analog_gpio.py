@@ -55,11 +55,11 @@ def readadc(adcnum, clockpin, mosipin, misopin, cspin):
 ma = 0
 while(True):
 	# input from pin_in
-	input_value = GPIO.input(SPIMISO)
-        input_value = readadc(6, SPICLK, SPIMOSI, SPIMISO, SPICS)
-	w = numpy.ones(input_value,'d')
-	y = numpy.convolve(w/w.sum(),input_value,mode='valid')
-	print(y.sum())
+        input_value = readadc(5, SPICLK, SPIMOSI, SPIMISO, SPICS)
+	print(input_value)
+	#w = numpy.ones(input_value,'d')
+	#y = numpy.convolve(w/w.sum(),input_value,mode='valid')
+	#print(y.sum())
 	#print(input_value);
 	#if 0 != input_value:
 	#	pprint.pprint("Movement: " + str(input_value))
