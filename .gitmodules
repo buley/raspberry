@@ -1,0 +1,3 @@
+[submodule "vendor/adafruit-raspberrypi-linux-pps"]
+	path = vendor/adafruit-raspberrypi-linux-pps
+	url = https://github.com/davidk/adafruit-raspberrypi-linux-pps.git
