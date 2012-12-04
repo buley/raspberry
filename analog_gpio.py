@@ -55,8 +55,8 @@ def readadc(adcnum, clockpin, mosipin, misopin, cspin):
 while(True):
 	# input from pin_in
 	input_value = GPIO.input(SPIMISO)
-        input_value = readadc(7, SPICLK, SPIMOSI, SPIMISO, SPICS)
-	pprint.pprint(input_value);
-	if 0 != input_value:
-		pprint.pprint("Movement: " + str(input_value))
-	time.sleep(1)
+        input_value = readadc(6, SPICLK, SPIMOSI, SPIMISO, SPICS)
+	print(input_value);
+	#if 0 != input_value:
+	#	pprint.pprint("Movement: " + str(input_value))
+	time.sleep(1/10)
