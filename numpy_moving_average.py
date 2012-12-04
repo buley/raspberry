@@ -52,15 +52,40 @@ def readadc(adcnum, clockpin, mosipin, misopin, cspin):
         adcout /= 2       # first bit is 'null' so drop it
         return adcout
 
-ma = 0
+results = numpy.array([])
 while(True):
 	# input from pin_in
-	input_value = GPIO.input(SPIMISO)
-        input_value = readadc(6, SPICLK, SPIMOSI, SPIMISO, SPICS)
-	w = numpy.ones(input_value,'d')
-	y = numpy.convolve(w/w.sum(),input_value,mode='valid')
-	print(y.sum())
-	#print(input_value);
-	#if 0 != input_value:
-	#	pprint.pprint("Movement: " + str(input_value))
-	time.sleep(1/10)
+	#in = GPIO.input(SPIMISO)
+        x = readadc(6, SPICLK, SPIMOSI, SPIMISO, SPICS)
+	#moving average
+	w = numpy.ones( x, 'd')
+	#other windows
+	s = numpy.array( x )
+	#hanning
+	#w = numpy.hanning(s)
+	#hamming
+	#w = numpy.hamming(s)
+	#bartlett
+	#w = numpy.bartlett(s)
+	#blackman
+	#w = numpy.blackman(s)
+	#kaiser
+	#w = numpy.kaiser(s, beta = 14)
+
+	print('current', x, 'running', results.mean(), results.std() )
+	if x > ( results.mean() - ( 3 * results.std() ) ) and x < ( results.mean() + ( 3 * results.std() ) ):
+		print("OK", x)
+	elif x > ( results.mean() + ( 3 * results.std() ) ):
+		print("TOO BIG", results.mean() + ( 3 *  results.std() ) )
+	elif x < ( results.mean() + ( 3 * results.std() ) ):
+		print("TOO SMALL", results.mean() + ( 3 *  results.std() ) )
+	y = numpy.convolve(w/w.sum(),x,mode='valid')
+	results = numpy.append( results, y.sum() )
+
+
+	#print(s);
+	#if 0 != s:
+	#	pprint.pprint("Movement: " + str(s))
+	time.sleep(1)
+
+
