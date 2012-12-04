@@ -54,6 +54,8 @@ def readadc(adcnum, clockpin, mosipin, misopin, cspin):
         return adcout
 
 dfs = 3
+sample = 1000
+seconds = 1/10
 debug = False
 results = numpy.array([])
 while(True):
@@ -65,7 +67,7 @@ while(True):
 	#moving average
 	#w = numpy.ones( x, 'd')
 	#other windows
-	s = numpy.array( x )
+	s = numpy.array( [ x ] )
 	#hanning
 	#w = numpy.hanning(s)
 	#hamming
@@ -78,18 +80,15 @@ while(True):
 	#w = numpy.kaiser(s, beta = 14)
 	if True == debug:
 		print('current', x, 'running', results.mean(), results.std() )
-	#if x > ( results.mean() - ( dfs * results.std() ) ) and x < ( results.mean() + ( dfs * results.std() ) ):
-	#	print("OK", x)
-	if (w.mean()) > ( results.mean() + ( dfs * results.std() ) ):
+	if x > ( results.mean() - ( dfs * results.std() ) ) and x < ( results.mean() + ( dfs * results.std() ) ):
+		if True == debug:
+			print("OK", x)
+	elif (w.mean()) > ( results.mean() + ( dfs * results.std() ) ):
 		print("TOO BIG", results.mean() + ( dfs *  results.std() ) )
 	elif (w.mean()) < ( results.mean() - ( dfs * results.std() ) ):
 		print("TOO SMALL", results.mean() + ( dfs *  results.std() ) )
 	#y = numpy.convolve(w/w.sum(),x,mode='valid')
-	results = numpy.append( results, w.mean() )
-
-	#print(s);
-	#if 0 != s:
-	#	pprint.pprint("Movement: " + str(s))
-	time.sleep(1/2)
+	results = numpy.append( results, w.mean() )[-(sample):]
+	time.sleep(seconds)
 
 
