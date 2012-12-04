@@ -1,5 +1,6 @@
 import RPi.GPIO as GPIO
 import pprint
+import time
 
 GPIO.setwarnings(False)
 
@@ -15,12 +16,18 @@ GPIO.setup(pin_in, GPIO.IN)
 GPIO.setup(pin_in_other, GPIO.IN)
 GPIO.setup(pin_out, GPIO.OUT)
 
-# input from pin_in
-input_value = GPIO.input(pin_in)
-input_value_2 = GPIO.input(pin_in_other)
-
-# output to pin_out
-if input_value or input_value_2:
-	GPIO.output(pin_out, True)
-else:
-	GPIO.output(pin_out, False)
+while(True):
+	# input from pin_in
+	input_value = GPIO.input(pin_in)
+	input_value_2 = GPIO.input(pin_in_other)
+	# output to pin_out
+	if True == input_value:
+		GPIO.output(pin_out, False)
+		pprint.pprint("Yep (1)")
+	elif True == input_value_2:
+		GPIO.output(pin_out, False)
+		pprint.pprint("Yep (2)")
+	else:
+		GPIO.output(pin_out, True)
+		pprint.pprint("Nope")
+	time.sleep(1)
