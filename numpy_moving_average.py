@@ -80,16 +80,16 @@ while(True):
 		print('current', x, 'running', results.mean(), results.std() )
 	#if x > ( results.mean() - ( dfs * results.std() ) ) and x < ( results.mean() + ( dfs * results.std() ) ):
 	#	print("OK", x)
-	if x > ( results.mean() + ( dfs * results.std() ) ):
+	if (w.mean()) > ( results.mean() + ( dfs * results.std() ) ):
 		print("TOO BIG", results.mean() + ( dfs *  results.std() ) )
-	elif x < ( results.mean() - ( dfs * results.std() ) ):
+	elif (w.mean()) < ( results.mean() - ( dfs * results.std() ) ):
 		print("TOO SMALL", results.mean() + ( dfs *  results.std() ) )
-	y = numpy.convolve(w/w.sum(),x,mode='valid')
-	results = numpy.append( results, y.sum() )
+	#y = numpy.convolve(w/w.sum(),x,mode='valid')
+	results = numpy.append( results, w.mean() )
 
 	#print(s);
 	#if 0 != s:
 	#	pprint.pprint("Movement: " + str(s))
-	time.sleep(1/10)
+	time.sleep(1/2)
 
 
